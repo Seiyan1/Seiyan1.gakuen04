@@ -1,0 +1,61 @@
+/*　解説を入れる　*/
+
+body{
+    margin:0;
+    background-color:#afeeee; /* 画面の余白を消す*/
+    font-family:"Yu Gothic","Meiryo",sans-serif; /*文字の種類　日本語が見やすい設定の奴*/
+}
+
+header{
+    width:100%; /*横幅をめいっぱい広げるもの*/
+    background:#00bfff;
+    color:white;
+
+    padding:25px 0; /*上下に余白を作る*/
+
+    text-align:center; /*文字を横中央にする*/
+
+    margin-bottom:90px; /*headerとしたのボタンの間を広げる*/
+
+}
+
+header h1{
+    font-size:50px;
+    margin:0; /*余計な余白を消す=>ないと背景の縦幅が大きくなる*/
+}
+
+
+.container{
+    width:100%;
+
+    display:flex; /*中身の文字の並び方を指示する始めのコードの事*/
+    flex-direction:column; /*縦に並べという指示*/
+    align-items:center; /*横方向を中央に揃える指示*/
+
+    gap:50px; /*ボタン同士の間隔*/
+}
+
+
+.menu{
+    width:500px; /*ボタンの横の長さ*/
+    height:90px; /*ボタンの縦の長さ*/
+
+    font-size:30px;
+    font-weight:bold; /*文字を太文字にする*/
+ 
+    border-radius:15px; /*角を丸くする*/
+    border:none; /*枠線を消す*/
+
+    background:white;
+
+    cursor:pointer; /*マウスを乗せると手の形になる*/
+
+    transition:0.3s; /*アニメーションを滑らかにする*/
+}
+
+.menu:hover{ /*hoverとは：カーソルをボタンに乗せた時の状態を指す。下の*/
+    background:#00bfff;
+    color:white;
+
+    transform:scale(1.05); /*少し大きくする*/
+}
