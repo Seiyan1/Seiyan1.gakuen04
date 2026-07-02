@@ -1,199 +1,23 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <title>時間割システム（モード選択対応）</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>テスト範囲一覧</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- ロール選択モーダル -->
-  <div id="roleModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="roleModalTitle">
-    <div class="modal-content" role="document">
-      <h2 id="roleModalTitle">モード選択</h2>
-      <p>このページをどのモードで利用しますか？</p>
-      <div class="modal-actions">
-        <button id="chooseAdminBtn" class="accent">管理者として開く</button>
-        <button id="chooseViewerBtn">閲覧者として開く</button>
-      </div>
-      <div id="adminPwdArea" class="pwd-area" style="display:none;">
-        <p class="small-note">管理者パスワードを入力してください。</p>
-        <input id="adminPwdInput" type="password" aria-label="管理者パスワード入力" />
-        <div class="modal-actions" style="margin-top:8px;">
-          <button id="adminPwdSubmit" class="accent">ログイン</button>
-          <button id="adminPwdCancel">キャンセル（閲覧者として続行）</button>
-        </div>
-        <p id="pwdError" class="error" style="display:none;">パスワードが違います。もう一度入力してください。</p>
-      </div>
-    </div>
+  <header>テスト範囲一覧</header>
+  <div class="back-area">
+    <button id="back" class="back-btn" >トップページへ戻る</button>
   </div>
-  <!-- メイン（初期は aria-hidden, モーダルで隠す） -->
-  <div class="container" id="mainContent" aria-hidden="true" style="display:none;">
-    <a href="../index.html" class="top-link" aria-label="トップページ" id="topLink">
-      <svg class="top-link-icon" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
-        <path fill="currentColor" d="M14 7l-5 5 5 5V7z"></path>
-      </svg>
-      サイトトップへ
-    </a>
-    <h1 class="page-title">時間割システム</h1>
-    <!-- お知らせ -->
-    <section class="section">
-      <h2 class="section-title">お知らせ</h2>
-      <div class="INFO"><span>お知らせ一覧</span></div>
-      <div class="scBox">
-        <p>new★9月25日の国語は保護メガネが必要です。</p>
-        <p>new★9月35日の数学は数字ブロックと計算カードが必要です。</p>
-        <p>new★緊急9月89日は休校になります。</p>
-      </div>
-      <div id="adminAnnouncementArea" class="admin-announcement" style="display:none;">
-        <p class="admin-label">管理者用：この学年のお知らせ編集</p>
-        <textarea id="announcementInput" rows="4" cols="60" placeholder="1行につき1つのお知らせを入力してください"></textarea><br>
-        <button id="announcementSave">この学年のお知らせを保存</button>
-      </div>
-    </section>
-    <!-- 設定 -->
-    <section class="section">
-      <h2 class="section-title">設定</h2>
-      <div class="control-row">
-        <div class="control-group">
-          <label for="grade">学年：</label>
-          <select id="grade">
-            <option value="first">1年</option>
-            <option value="second" selected>2年</option>
-            <option value="third">3年</option>
-          </select>
-        </div>
-        <div class="control-group">
-          <label for="class">クラス：</label>
-          <select id="class">
-            <option value="classA">A組</option>
-            <option value="classB" selected>B組</option>
-            <option value="classC">C組</option>
-            <option value="classD">D組</option>
-          </select>
-        </div>
-      </div>
-      <div class="control-row">
-        <div class="control-group">
-          <label for="date">日付：</label>
-          <input type="date" id="date" aria-label="表示する週の日付">
-        </div>
-        <div class="control-group">
-          <button id="prevWeekBtn">先週</button>
-          <button id="thisWeekBtn">今週</button>
-          <button id="nextWeekBtn">翌週</button>
-        </div>
-        <div class="control-group">
-          <button id="readConfirmBtn">この日の時間割を確認済みにする</button>
-          <button id="undoReadBtn" style="display:none;">既読取り消し</button>
-          <span id="readStatus" class="read-status" aria-live="polite"></span>
-        </div>
-      </div>
-    </section>
-    <!-- 管理者向け既読情報 -->
-    <section id="adminSection" class="section section-admin" style="display:none;">
-      <h2 class="section-title">管理者向け既読情報</h2>
-      <div id="readStats" class="read-stats" style="display:none;">
-        <p>
-          クラス：<span id="currentClassLabel"></span>
-          ／ この日の既読人数：<span id="readCount">0</span>人
-        </p>
-      </div>
-      <div id="classReadStats" class="class-read-stats" style="display:none;">
-        <p class="admin-label">
-          （管理者専用）クラス別既読人数一覧<br>
-          ※選択した「学年」と「日付」に対して
-        </p>
-        <table border="1" class="class-stats-table">
-          <tr><th>クラス</th><th>既読人数</th></tr>
-          <tr><td>A組</td><td id="clsACount">0</td></tr>
-          <tr><td>B組</td><td id="clsBCount">0</td></tr>
-          <tr><td>C組</td><td id="clsCCount">0</td></tr>
-          <tr><td>D組</td><td id="clsDCount">0</td></tr>
-        </table>
-      </div>
-    </section>
-    <!-- 時間割（大きく表示） -->
-    <section class="section">
-      <h2 class="section-title">時間割</h2>
-      <div class="timetable-wrap">
-        <table border="1" class="timetable" role="table" aria-label="時間割表">
-          <tr>
-            <th scope="col">月/限</th>
-            <th scope="col">月曜日<br><span id="hdr-mon" tabindex="0" role="button" aria-pressed="false">～日</span></th>
-            <th scope="col">火曜日<br><span id="hdr-tue" tabindex="0" role="button" aria-pressed="false">～日</span></th>
-            <th scope="col">水曜日<br><span id="hdr-wed" tabindex="0" role="button" aria-pressed="false">～日</span></th>
-            <th scope="col">木曜日<br><span id="hdr-thu" tabindex="0" role="button" aria-pressed="false">～日</span></th>
-            <th scope="col">金曜日<br><span id="hdr-fri" tabindex="0" role="button" aria-pressed="false">～日</span></th>
-          </tr>
-          <tr>
-            <th scope="row">1限</th>
-            <td id="月1" class="time">教科</td>
-            <td id="火1" class="time">教科</td>
-            <td id="水1" class="time">教科</td>
-            <td id="木1" class="time">教科</td>
-            <td id="金1" class="time">教科</td>
-          </tr>
-          <tr>
-            <th scope="row">2限</th>
-            <td id="月2" class="time">教科</td>
-            <td id="火2" class="time">教科</td>
-            <td id="水2" class="time">教科</td>
-            <td id="木2" class="time">教科</td>
-            <td id="金2" class="time">教科</td>
-          </tr>
-          <tr>
-            <th scope="row">3限</th>
-            <td id="月3" class="time">教科</td>
-            <td id="火3" class="time">教科</td>
-            <td id="水3" class="time">教科</td>
-            <td id="木3" class="time">教科</td>
-            <td id="金3" class="time">教科</td>
-          </tr>
-          <tr>
-            <th scope="row">4限</th>
-            <td id="月4" class="time">教科</td>
-            <td id="火4" class="time">教科</td>
-            <td id="水4" class="time">教科</td>
-            <td id="木4" class="time">教科</td>
-            <td id="金4" class="time">教科</td>
-          </tr>
-          <tr>
-            <th scope="row">5限</th>
-            <td id="月5" class="time">教科</td>
-            <td id="火5" class="time">教科</td>
-            <td id="水5" class="time">教科</td>
-            <td id="木5" class="time">教科</td>
-            <td id="金5" class="time">教科</td>
-          </tr>
-          <tr>
-            <th scope="row">6限</th>
-            <td id="月6" class="time">教科</td>
-            <td id="火6" class="time">教科</td>
-            <td id="水6" class="time">教科</td>
-            <td id="木6" class="time">教科</td>
-            <td id="金6" class="time">教科</td>
-          </tr>
-          <tr>
-            <th scope="row">7限</th>
-            <td id="月7" class="time">教科</td>
-            <td id="火7" class="time">教科</td>
-            <td id="水7" class="time">教科</td>
-            <td id="木7" class="time">教科</td>
-            <td id="金7" class="time">教科</td>
-          </tr>
-          <tr>
-            <th scope="row">8限</th>
-            <td id="月8" class="time">教科</td>
-            <td id="火8" class="time">教科</td>
-            <td id="水8" class="time">教科</td>
-            <td id="木8" class="time">教科</td>
-            <td id="金8" class="time">教科</td>
-          </tr>
-        </table>
-      </div>
-    </section>
+  <div class="tabs">
+    <button class="grade-btn" onclick="showGrade(1, this)">1年</button> <!--onclick="showGrade(1, this)"=>クリックした時にshowGradeというJavaScriptの関数を実行-->
+    <button class="grade-btn" onclick="showGrade(2, this)">2年</button> <!--【例】(1,this)=>1 は「1年のデータを表示してください」という意味・this は「今押したこのボタン自身」という意味-->
+    <button class="grade-btn" onclick="showGrade(3, this)">3年</button>
   </div>
-  <script src="script.js"></script>
+  <div id="examTabs" class="exam-tabs"></div> <!--考査のボタンを表示。ここは最初から何も入っていない。jsが後からボタンを自動で入れる。  idはjsで使う /  classはCSSで使う-->
+  <div id="content" class="content"></div>    <!--教科名・テスト範囲を表示。内容は上記と同様。-->
+  <script src="script.js"></script>           <!--ボタンを押したときやデータの表示などをscript.jsから読み込んでという意味。-->
 </body>
 </html>
