@@ -1,0 +1,177 @@
+body{
+  margin:0;
+  font-family:"Yu Gothic","Meiryo",sans-serif;
+  background:#afeeee;
+  color:#333;
+}
+header{
+  background:#00bfff;
+  color:white;
+  text-align:center;
+  padding:20px;
+  font-size:26px;
+  font-weight:bold;
+  box-shadow:0 2px 8px rgba(0,0,0,0.15);
+}
+/* ボタン共通 */
+button{
+  font-family:inherit;
+  cursor:pointer;
+  transition:all 0.25s ease;
+}
+button:hover{
+  transform:translateY(-3px);
+}
+button:active{
+  transform:scale(0.97);
+}
+/* 学年ボタン */
+.tabs{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+  margin:30px 0 20px;
+}
+.grade-btn{
+  background:white;
+  color:#00bfff;
+  border:2px solid #00bfff;
+  border-radius:30px;
+  padding:12px 28px;
+  font-size:18px;
+  font-weight:bold;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+.grade-btn:hover{
+  background:#00bfff;
+  color:white;
+}
+.grade-btn.active{
+  background:#00bfff;
+  color:white;
+}
+/* 考査ボタン */
+.exam-tabs{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+  margin:20px auto;
+  padding:0 20px;
+}
+.exam-btn{
+  background:#fff8dc;
+  color:#333;
+  border:2px solid #f0c36d;
+  border-radius:25px;
+  padding:10px 20px;
+  font-size:16px;
+  font-weight:bold;
+  box-shadow:0 3px 8px rgba(0,0,0,0.1);
+}
+.exam-btn:hover{
+  background:#f0c36d;
+  color:white;
+}
+.exam-btn.active{
+  background:#f0c36d;
+  color:white;
+}
+/* 表示エリア */
+.content{
+  display:flex;
+  justify-content:center;
+  padding:20px;
+}
+/* カード */
+.card{
+  background:white;
+  width:90%;
+  max-width:900px;
+  border-radius:20px;
+  padding:25px;
+  box-shadow:0 6px 16px rgba(0,0,0,0.12);
+}
+/* タイトル */
+.title{
+  text-align:center;
+  font-size:24px;
+  font-weight:bold;
+  color:#00bfff;
+  margin-bottom:20px;
+}
+/* 教科と範囲の表 */
+.subject-table{
+  width:100%;
+  border-collapse:collapse;
+}
+.subject-table th,
+.subject-table td{
+  border:1px solid #ccc;
+  padding:12px;
+  text-align:left;
+  vertical-align:top;
+}
+.subject-table th{
+  width:140px;
+  background:#f0fbff;
+}
+/* ふわっと表示 */
+.fade-in{
+  animation:fadeInUp 0.4s ease;
+}
+@keyframes fadeInUp{
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+/* スマホ用 */
+@media (max-width:600px){
+  .grade-btn{
+    font-size:16px;
+    padding:10px 20px;
+  }
+  .exam-btn{
+    font-size:14px;
+    padding:8px 16px;
+  }
+  .title{
+    font-size:20px;
+  }
+  .subject-table th,
+  .subject-table td{
+    font-size:14px;
+    padding:10px;
+  }
+}
+
+.back-area{
+  text-align:center;
+  margin-top:20px;
+}
+.back-btn{
+  background:white;
+  color:#00bfff;
+  border:2px solid #00bfff;
+  border-radius:25px;
+  padding:10px 24px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:all 0.25s ease;
+  box-shadow:0 3px 8px rgba(0,0,0,0.1);
+}
+.back-btn:hover{
+  background:#00bfff;
+  color:white;
+  transform:translateY(-3px);
+}
+.back-btn:active{
+  transform:scale(0.97);
+}
